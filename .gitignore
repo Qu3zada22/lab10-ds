@@ -1,0 +1,14 @@
+# Datos de INGUAT (link privado): no se versionan, ver README
+datos/
+
+# Capturas de referencia personales
+imagenes/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.ipynb_checkpoints/
+
+# Sistema
+.DS_Store
