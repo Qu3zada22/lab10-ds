@@ -1,0 +1,149 @@
+/* Estilos del tablero. Paleta y tipografía según docs/documento_diseno.md (4.1).
+   Dash carga automáticamente todo lo que esté en assets/. */
+
+:root {
+  --texto: #1F2933;
+  --texto-2: #52606D;
+  --fondo: #F5F7F8;
+  --tarjeta: #FFFFFF;
+  --rejilla: #E4E7EB;
+  --primario: #0B5563;
+  --primario-claro: #E6F2F3;
+  --aviso-fondo: #FFF4E5;
+  --aviso-icono: #9A6700;
+  --radio: 10px;
+  --sombra: 0 1px 2px rgba(31, 41, 51, 0.06), 0 1px 3px rgba(31, 41, 51, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- barra superior ---------- */
+.barra {
+  background: var(--primario);
+  color: #FFFFFF;
+  padding: 12px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.marca { display: flex; flex-direction: column; }
+.marca-nombre { font-weight: 700; font-size: 17px; }
+.marca-destino { font-size: 13px; opacity: 0.85; }
+.navegacion { display: flex; flex-wrap: wrap; gap: 4px; }
+.nav-enlace {
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.nav-enlace:hover { background: rgba(255, 255, 255, 0.12); }
+.nav-enlace.activo { background: #FFFFFF; color: var(--primario); font-weight: 600; }
+.nav-enlace:focus-visible, button:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
+
+/* ---------- estructura de página ---------- */
+.principal { max-width: 1400px; margin: 0 auto; padding: 24px; }
+.pagina.con-filtros { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 24px; align-items: start; }
+.pagina-titulo { font-size: 28px; font-weight: 600; margin: 0 0 4px; }
+.pagina-pregunta { color: var(--texto-2); margin: 0 0 20px; max-width: 75ch; }
+
+/* ---------- filtros ---------- */
+.filtros {
+  position: sticky;
+  top: 16px;
+  background: var(--tarjeta);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 20px;
+}
+.filtros-titulo { font-size: 16px; font-weight: 600; margin: 0 0 12px; }
+.filtro-etiqueta { display: block; font-weight: 600; font-size: 13px; margin: 18px 0 8px; }
+.filtro-etiqueta:first-of-type { margin-top: 0; }
+.filtro-opciones label { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; font-size: 14px; }
+.filtro-opciones input { accent-color: var(--primario); width: 16px; height: 16px; }
+.filtro-nota { font-size: 12px; color: var(--texto-2); margin: 6px 0 0; }
+.muestra { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+.boton-secundario {
+  margin-top: 24px;
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--tarjeta);
+  color: var(--primario);
+  border: 1.5px solid var(--primario);
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.boton-secundario:hover { background: var(--primario-claro); }
+.boton-enlace {
+  background: none;
+  border: none;
+  color: var(--primario);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ---------- indicadores ---------- */
+.fila-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 16px; }
+.kpi { background: var(--tarjeta); border-radius: var(--radio); box-shadow: var(--sombra); padding: 16px; }
+.kpi-titulo { font-size: 13px; color: var(--texto-2); font-weight: 500; }
+.kpi-valor { font-size: 28px; font-weight: 700; margin: 2px 0; }
+.kpi-nota { font-size: 12px; color: var(--texto-2); }
+
+/* ---------- tarjetas de gráficas ---------- */
+.tarjeta { background: var(--tarjeta); border-radius: var(--radio); box-shadow: var(--sombra); padding: 20px; margin-bottom: 16px; }
+.tarjeta-titulo { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
+.tarjeta-subtitulo { font-size: 14px; color: var(--texto-2); margin: 0 0 8px; max-width: 90ch; }
+.tarjeta-ayuda { font-size: 12px; color: var(--texto-2); margin: 8px 0 0; }
+.construccion { border-left: 4px solid var(--rejilla); }
+
+.estado-seleccion {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  background: var(--primario-claro);
+  color: var(--texto);
+  border-radius: 6px;
+  padding: 8px 14px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.aviso {
+  display: flex;
+  gap: 10px;
+  background: var(--aviso-fondo);
+  border-radius: var(--radio);
+  padding: 14px 16px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.aviso-icono { color: var(--aviso-icono); font-size: 16px; line-height: 1.3; }
+
+.pie { text-align: center; font-size: 12px; color: var(--texto-2); padding: 16px 24px 32px; }
+
+/* ---------- pantallas angostas ---------- */
+@media (max-width: 900px) {
+  .principal { padding: 16px; }
+  .pagina.con-filtros { grid-template-columns: 1fr; }
+  .filtros { position: static; }
+}
