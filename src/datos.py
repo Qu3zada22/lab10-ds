@@ -61,3 +61,91 @@ def tikal() -> pd.DataFrame:
     largo.loc[sin_dato, "visitantes"] = np.nan
 
     return largo.sort_values(["fecha", "segmento"]).reset_index(drop=True)
+
+
+# ---------------------------------------------------------------- AIMM (conectividad aérea)
+
+ARCHIVO_AIMM_AEROLINEAS = DATOS / "AIMM_Aerolineas_2023-2026.xlsx"
+ARCHIVO_AIMM_SEGMENTOS = DATOS / "AIMM_Consolidado_2022-2025.xlsx"
+ARCHIVO_AIMM_OPERACIONES = DATOS / "AIMM_Operaciones_Aeronauticas_2022-2026.xlsx"
+
+# Los archivos nombran distinto al mismo operador (AERORUTA / AERO RUTA MAYA), así que se unifican.
+OPERADORES = {
+    "AERORUTA": "Aero Ruta Maya",
+    "AERO RUTA MAYA": "Aero Ruta Maya",
+    "AVIATECA": "Aviateca",
+    "T.A.G.": "T.A.G.",
+    "TROPIC AIR": "Tropic Air",
+    "PRIVADOS": "Privados",
+    "VUELOS PRIV. CONTROLADOS POR FBO": "Privados controlados (FBO)",
+    "OTROS": "Otros",
+    "ARMSA / AEROMAR": "ARMSA / Aeromar",
+    "CHARTER PRIVADOS": "Charter privados",
+    "VUELOS MILITARES EN AIMM": "Vuelos militares",
+}
+
+
+def _con_fecha(df: pd.DataFrame, anio: str, mes: str) -> pd.DataFrame:
+    df = df.copy()
+    df["anio"] = df[anio].astype(int)
+    df["mes"] = df[mes].astype(int)
+    df["fecha"] = pd.to_datetime(dict(year=df["anio"], month=df["mes"], day=1))
+    return df
+
+
+@lru_cache
+def aimm_aerolineas() -> pd.DataFrame:
+    """Pasajeros del AIMM por aerolínea y sentido, ene 2023 a abr 2026.
+
+    Columnas: fecha, anio, mes, operador, flujo, pasajeros. Si una aerolínea no tiene fila en un mes
+    (por ejemplo Tropic Air en 2026) ese mes queda sin dato, no en 0.
+    """
+    df = _con_fecha(pd.read_excel(ARCHIVO_AIMM_AEROLINEAS, sheet_name="Base de Datos"), "Año", "mes_numero")
+    df["operador"] = df["Aerolínea"].map(OPERADORES)
+    return df.rename(columns={"Tipo de Flujo": "flujo", "Pasajeros": "pasajeros"})[
+        ["fecha", "anio", "mes", "operador", "flujo", "pasajeros"]
+    ]
+
+
+@lru_cache
+def aimm_segmentos() -> pd.DataFrame:
+    """Pasajeros del AIMM por segmento (doméstico, internacional, privado). Años 2022, 2024 y 2025.
+
+    Columnas: fecha, anio, mes, segmento, flujo, pasajeros. El archivo no trae 2023.
+    """
+    df = pd.read_excel(ARCHIVO_AIMM_SEGMENTOS, sheet_name="Base Consolidada", header=2)
+    df = _con_fecha(df, "Año", "N° Mes")
+    return df.rename(columns={"Tipo de Pasajero": "segmento", "Tipo de Flujo": "flujo", "Pasajeros": "pasajeros"})[
+        ["fecha", "anio", "mes", "segmento", "flujo", "pasajeros"]
+    ]
+
+
+@lru_cache
+def aimm_operaciones() -> pd.DataFrame:
+    """Operaciones aéreas (aterrizajes y despegues) por operador, ene 2022 a abr 2026.
+
+    Columnas: fecha, anio, mes, operador, tipo, operaciones. Son vuelos, no personas.
+    """
+    df = pd.read_excel(ARCHIVO_AIMM_OPERACIONES, sheet_name="Base de Operaciones", header=2)
+    df = _con_fecha(df, "Año", "N° Mes")
+    df["operador"] = df["Operador"].map(OPERADORES)
+    return df.rename(columns={"Tipo de Operación": "tipo", "Operaciones": "operaciones"})[
+        ["fecha", "anio", "mes", "operador", "tipo", "operaciones"]
+    ]
+
+
+@lru_cache
+def aimm_pasajeros_total() -> pd.DataFrame:
+    """Pasajeros totales del AIMM por mes (entradas + salidas), ene 2022 a abr 2026.
+
+    2022, 2024 y 2025 salen de la base por segmento. 2023 no existe ahí, así que se reconstruye con
+    la base por aerolínea, igual que 2026. Los totales de 2024 y 2025 coinciden en ambas bases.
+    Columnas: fecha, anio, mes, pasajeros, fuente.
+    """
+    seg = aimm_segmentos().groupby("fecha")["pasajeros"].sum().reset_index().assign(fuente="segmento")
+    aero = aimm_aerolineas()
+    aero = aero[~aero["anio"].isin(seg["fecha"].dt.year.unique())]
+    aero = aero.groupby("fecha")["pasajeros"].sum().reset_index().assign(fuente="aerolinea")
+    total = pd.concat([seg, aero]).sort_values("fecha").reset_index(drop=True)
+    total["anio"], total["mes"] = total["fecha"].dt.year, total["fecha"].dt.month
+    return total
