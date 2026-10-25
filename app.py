@@ -22,16 +22,9 @@ app = Dash(
 # Secciones planificadas en docs/documento_diseno.md que aún no se implementan.
 # Cada integrante reemplaza su entrada por un archivo en pages/ cuando la construya.
 PENDIENTES = [
-    ("resumen", "Resumen", 0, "Panorama general del destino",
-     "Tarjetas clave de las tres fuentes y guía de uso del tablero.", "Anggie Quezada"),
     ("triangulacion", "Triangulación", 2,
      "P3. ¿Qué porcentaje de los visitantes en Petén compra boleto a Tikal?",
      "V4 índice base 100 de las tres fuentes enlazado con V5 % de visitantes con boleto.", "Jonathan Díaz"),
-    ("fronteras", "Fronteras", 5,
-     "P6. ¿Por qué fronteras entran los visitantes internacionales a Petén y de qué mercados vienen?",
-     "V10 ingresos por frontera y año enlazado con V11 mercados de origen.", "Jonathan Díaz"),
-    ("acerca", "Acerca de", 6, "Fuentes, glosario y limitaciones",
-     "Descripción de cada fuente, glosario de términos y limitaciones de los datos.", "Anggie Quezada"),
 ]
 for modulo, nombre, orden, pregunta, contenido, responsable in PENDIENTES:
     dash.register_page(

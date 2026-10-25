@@ -34,7 +34,6 @@ un error de una sola fuente.
 | 2b | AIMM, pasajeros por aerolínea | `AIMM_Aerolineas_2023-2026.xlsx` | ene 2023 a abr 2026, mensual | Pasajeros por aerolínea y flujo. **Cubre el 2023 que falta en 2a** |
 | 2c | AIMM, operaciones | `AIMM_Operaciones_Aeronauticas_2022-2026.xlsx` | ene 2022 a abr 2026, mensual | Aterrizajes y despegues por operador |
 | 3 | Telefonía (movilidad) | `BD_moviidad_mensual.xlsx`, hoja `Peten` | sep 2025 a ago 2026, mensual (**sin ene y feb 2026**) | Visitantes estimados por telefonía en 3 polígonos (Mundo Maya Aeropuerto, Isla de Flores, El Remate), por país, estancia (menor o mayor a 1 día), días-persona y permanencia promedio |
-| M | Migración | `Base_Migracion_2009-2026jun.xlsx` | ene 2009 a jun 2026, mensual | Ingresos internacionales al país. Se filtran las 4 fronteras de Petén: Melchor de Mencos, Mundo Maya, El Naranjo y Bethel. Archivo común obligatorio |
 | H1 | Ocupación hotelera | `indice_ocupacion_mensual_2023_2025_1.csv` | ene 2023 a dic 2025, mensual | Índice de ocupación por departamento (se filtra Petén). Archivo común obligatorio |
 | H2 | Oferta hotelera | `oferta_hotelera_2022_2026.csv` | 4.º trim. 2022 a 1.er trim. 2026, cortes anuales | Establecimientos, habitaciones y plazas cama por tipo (hotel, hospedaje, pensión). Petén tiene unas 4,000 habitaciones. Archivo común obligatorio |
 
@@ -59,12 +58,9 @@ tiempo.
    común con el AIMM son apenas 6 (sep a dic 2025, mar y abr 2026). Además el **93 % de los
    visitantes detectados son guatemaltecos**, así que la cifra está dominada por turismo interno.
    Los valores son estimaciones expandidas (con decimales), no conteos exactos.
-6. **Fronteras:** Melchor de Mencos (frontera con Belice) concentra más del 95 % de los ingresos
-   internacionales por Petén. El Naranjo no tiene registros desde 2023. Desde 2023 la base de
-   migración reporta agrupaciones de mercado en lugar de países individuales.
-7. **Vuelos ≠ pasajeros:** las operaciones (aterrizajes y despegues) y los pasajeros son unidades
+6. **Vuelos ≠ pasajeros:** las operaciones (aterrizajes y despegues) y los pasajeros son unidades
    distintas y **nunca se suman ni se grafican en el mismo eje**.
-8. **Pasajeros ≠ turistas:** el AIMM incluye residentes que viajan y personal. Un boleto de Tikal
+7. **Pasajeros ≠ turistas:** el AIMM incluye residentes que viajan y personal. Un boleto de Tikal
    no equivale a un turista único (una persona puede entrar dos veces). Las fuentes se comparan por
    **tendencia**, no por cantidad absoluta.
 
@@ -79,7 +75,6 @@ tiempo.
 | P3 | ¿Qué **porcentaje de los visitantes que están en Petén compra boleto a Tikal**, y las tres fuentes cuentan la misma historia mes a mes? | Medir qué tanto del turismo de Petén capta el parque, detectar demanda que no llega a Tikal (oportunidad para Flores y El Remate) y saber cuándo un cambio es confiable | 1, 2, 3 | Triangulación |
 | P4 | ¿Cuánto pesa cada aerolínea en los pasajeros del AIMM, cómo se reconstruye 2023 y qué tan dependiente es Petén de pocos operadores? | Negociar rutas y frecuencias y medir el riesgo si un operador reduce su servicio | 2a, 2b, 2c | Conectividad |
 | P5 | ¿La ocupación hotelera de Petén acompaña la temporada alta de Tikal? ¿En qué meses hay presión sobre la capacidad instalada y en cuáles sobra capacidad? | **Sostenibilidad:** detectar saturación (más de 85 % de ocupación), planificar la oferta de hospedaje y promover los meses con capacidad libre | H1, H2, 1 | Hospedaje |
-| P6 | ¿Por qué fronteras entran los visitantes internacionales a Petén, de qué mercados vienen y cómo ha cambiado desde 2019? | Coordinar servicios y promoción con Belice (principal puerta terrestre) y dimensionar la atención en los puestos fronterizos | M | Fronteras |
 
 **Preguntas descartadas:** pronósticos de demanda (por indicación del catedrático, los modelos
 quedan para el Proyecto 3); el perfil y la satisfacción del visitante y la percepción de los
@@ -101,7 +96,6 @@ encuesta no se puede expandir) y las causas de los cambios (los datos muestran p
   aerolínea y operaciones por operador, sin mezclar vuelos con pasajeros.
 - Hospedaje en Petén: ocupación mensual 2023 a 2025 frente a la capacidad instalada (habitaciones
   por tipo de alojamiento).
-- Ingresos internacionales por las fronteras de Petén (2009 a 2026) y sus mercados de origen.
 - Textos cortos que dicen qué muestra cada gráfica, para qué sirve y cuáles son sus límites.
   Mensajes claros cuando una selección no tiene datos (por ejemplo, AIMM por segmento en 2023).
 
@@ -128,8 +122,7 @@ encuesta no se puede expandir) y las causas de los cambios (los datos muestran p
    rojo-verde para comparar.
 3. **Contraste WCAG 2.1:** texto ≥ 4.5:1 y elementos gráficos ≥ 3:1. Los valores se calcularon con
    la fórmula de luminancia relativa de WCAG.
-4. **Dato medido frente a dato estimado:** los conteos (boletos, pasajeros, ingresos por frontera)
-   van con línea continua. La telefonía, que es una estimación expandida, va con línea punteada.
+4. **Dato medido frente a dato estimado:** los conteos (boletos, pasajeros) van con línea continua. La telefonía, que es una estimación expandida, va con línea punteada.
 5. **Interfaz neutra:** grises y blanco en la interfaz. El color saturado se reserva para los datos
    y la selección.
 6. **Máximo 4 colores por gráfica**, para no saturar la memoria de trabajo del usuario.
@@ -142,7 +135,7 @@ encuesta no se puede expandir) y las causas de los cambios (los datos muestran p
 | Tarjetas | `#FFFFFF` | n/a | Contenedor de cada gráfica |
 | Texto principal | `#1F2933` | 14.8:1 | Títulos, valores, etiquetas |
 | Texto secundario | `#52606D` | 6.5:1 | Subtítulos, notas, ejes |
-| Primario / **selección** | `#0B5563` | 8.4:1 | Barra de navegación, pestaña activa y **el elemento que el usuario seleccionó** (año, mes, aerolínea, frontera). Azul petróleo, asociado a agua y selva, coherente con turismo sostenible |
+| Primario / **selección** | `#0B5563` | 8.4:1 | Barra de navegación, pestaña activa y **el elemento que el usuario seleccionó** (año, mes, aerolínea). Azul petróleo, asociado a agua y selva, coherente con turismo sostenible |
 | Contexto | `#B8C0C8` | n/a | Elementos no seleccionados cuando hay una selección activa (foco + contexto) |
 | Aviso | fondo `#FFF4E5`, ícono `#9A6700` | 4.9:1 | Mensajes de limitación ("sin dato", "parque cerrado") |
 
@@ -154,16 +147,15 @@ encuesta no se puede expandir) y las causas de los cambios (los datos muestran p
 | Extranjeros | `#C25400` bermellón | 4.6:1 |
 | Otros / exonerados | `#7B8794` gris medio | 3.7:1 |
 
-**Datos: fuente** (Triangulación, Conectividad y Fronteras)
+**Datos: fuente** (Triangulación y Conectividad)
 
 | Fuente | Color | Contraste | Asociación |
 |---|---|---|---|
 | Boletos Tikal | `#00826A` verde selva | 4.8:1 | El parque, la selva |
 | AIMM (pasajeros y vuelos) | `#7B4FB0` violeta | 5.9:1 | Aire |
 | Telefonía | `#9A6700` ámbar | 4.9:1 | Señal |
-| Migración, fronteras de Petén | `#C2185B` magenta | 5.9:1 | Frontera |
 
-Dentro de una misma fuente (por ejemplo, las aerolíneas del AIMM o las 4 fronteras) no se agregan
+Dentro de una misma fuente (por ejemplo, las aerolíneas del AIMM) no se agregan
 colores nuevos: se usan tonos del color de la fuente y el elemento seleccionado pasa al color de
 selección.
 
@@ -192,9 +184,8 @@ Estructura común a todas las páginas:
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ Observatorio de Turismo Sostenible  [Resumen][Tikal][Triangulación]      │
-│ Tikal y Flores · Petén              [Conectividad][Hospedaje][Fronteras] │  ← barra #0B5563
-│                                     [Acerca de]                          │
+│ Observatorio de Turismo Sostenible  [Tikal][Triangulación]               │
+│ Tikal y Flores · Petén              [Conectividad][Hospedaje]            │  ← barra #0B5563
 ├───────────────┬──────────────────────────────────────────────────────────┤
 │ FILTROS       │  Título de la página                                     │
 │ (según página)│  "¿Qué responde esta página?" (texto corto)              │
@@ -243,30 +234,16 @@ Estructura común a todas las páginas:
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Página "Fronteras"** (P6):
-
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│ V10 Ingresos internacionales por frontera de Petén y año (barras)       │
-│     → clic en una barra (frontera + año) ──┐                            │
-├────────────────────────────────────────────┼────────────────────────────┤
-│ V11 Mercados de origen de esa frontera     ▼ ese año (barras ordenadas) │
-└─────────────────────────────────────────────────────────────────────────┘
-```
-
 ### Navegación
 
 Las pestañas van de lo general a lo particular, en el orden de las preguntas:
 
 | Pestaña | Pregunta | Contenido |
 |---|---|---|
-| **Resumen** | Panorama | Tarjetas (visitantes a Tikal en el último año, % contra 2019, mes pico, pasajeros AIMM) y guía de uso |
 | **Tikal** | P1, P2 | V1, V2, V3 |
 | **Triangulación** | P3 | V4, V5 |
 | **Conectividad** | P4 | V6, V7 |
 | **Hospedaje** | P5 | V8, V9 |
-| **Fronteras** | P6 | V10, V11 |
-| **Acerca de** | n/a | Fuentes, glosario (índice base 100, estacionalidad, triangulación, ocupación) y limitaciones |
 
 **Principios de HCI y UX aplicados:**
 
@@ -282,7 +259,7 @@ Las pestañas van de lo general a lo particular, en el orden de las preguntas:
   lugar de una gráfica vacía.
 - **Consistencia:** los mismos colores, tipografía y lugar de los controles en todas las páginas.
 - **Lenguaje de negocio:** "boletos vendidos", "habitaciones ocupadas", "índice (100 = promedio)",
-  con los términos técnicos explicados en el glosario.
+  con los términos técnicos explicados en el subtítulo de cada gráfica.
 - **Hechos frente a interpretaciones:** las gráficas muestran lo observado. Los avisos dicen qué no
   se puede concluir (por ejemplo, que un cambio tenga una causa concreta).
 
@@ -290,7 +267,7 @@ Las pestañas van de lo general a lo particular, en el orden de las preguntas:
 
 ## 4.2 Visualizaciones propuestas y tipo de gráfica
 
-Se proponen 11 visualizaciones interactivas (el mínimo es 8). Tarjetas, controles y textos son
+Se proponen 9 visualizaciones interactivas (el mínimo es 8). Tarjetas, controles y textos son
 complementarios y **no** se cuentan.
 
 | # | Visualización | Pág. | Tipo | Por qué ese tipo | Interacción |
@@ -304,17 +281,14 @@ complementarios y **no** se cuentan.
 | V7 | Pasajeros y operaciones mensuales del operador elegido | Conect. | Dos paneles de líneas alineados (eje X compartido, eje Y propio) | Las dos medidas tienen unidades distintas: en paneles separados se comparan en el tiempo **sin mezclar vuelos con pasajeros** | Cambia según la aerolínea elegida en V6 |
 | V8 | Ocupación hotelera mensual de Petén, un año por línea | Hosp. | Gráfico estacional (eje X = mes, una línea por año) con línea de referencia en 85 % | Al superponer los años se ve si la temporada alta se repite y en qué meses hay saturación o capacidad libre | Mostrar u ocultar años. **Clic en un mes → V9** |
 | V9 | Capacidad instalada frente a demanda del mes elegido | Hosp. | Barras apiladas de habitaciones por tipo (hotel, hospedaje, pensión), con marca de habitaciones ocupadas estimadas (ocupación × habitaciones) | Traduce un porcentaje abstracto en habitaciones, una unidad que el directivo entiende | Cambia según el mes y año elegidos en V8 |
-| V10 | Ingresos internacionales por frontera de Petén y año | Front. | Barras apiladas por año (una capa por frontera) | Compara el total anual y el peso de cada frontera a la vez. Deja ver la caída de 2020 a 2021 y la recuperación | Rango de años, **clic en una barra → V11** |
-| V11 | Mercados de origen por la frontera y año elegidos | Front. | Barras horizontales ordenadas (top 10) | Los nombres de países se leen mejor en horizontal y el orden facilita el ranking | Cambia según la barra elegida en V10. Avisa cuando desde 2023 hay agrupaciones en lugar de países |
 
-**Enlaces entre gráficas (requisito 3.2):** V1 ↔ V2 y V3 · V4 → V5 · V6 → V7 · V8 → V9 ·
-V10 → V11.
+**Enlaces entre gráficas (requisito 3.2):** V1 ↔ V2 y V3 · V4 → V5 · V6 → V7 · V8 → V9.
 
 **Más y menos detalle (requisito 1.4):** Año/Trimestre/Mes en V1, treemap año → aerolínea en V6,
-frontera → país en V10 → V11, zoom temporal en V1 y V4, y clic en un año para ver sus meses.
+zoom temporal en V1 y V4, y clic en un año para ver sus meses.
 
 **Selección de gráficas (requisito 3.3):** cada página muestra solo las gráficas de su pregunta. El
-usuario elige qué series ver (segmentos, fuentes, años, fronteras) desde la leyenda y los filtros.
+usuario elige qué series ver (segmentos, fuentes, años) desde la leyenda y los filtros.
 
 ---
 
@@ -358,67 +332,56 @@ lab10-ds/
 
 > El historial del repositorio debe mostrar aportes de los tres integrantes.
 
-| # | Tarea | Responsable | Fecha de terminación | Estado |
-|---|---|---|---|---|
-| 1 | Preguntas de gestión, alcance, paleta y justificación | Anggie Quezada | Jue 22-oct | Completado |
-| 2 | Bosquejo de interfaz, navegación y elección de herramienta | Anggie Quezada | Jue 22-oct | Completado |
-| 3 | Estructura del proyecto Dash, carga y limpieza de boletos de Tikal | Anggie Quezada | Jue 22-oct | Completado |
-| 4 | V1 y V2 funcionales y enlazadas | Anggie Quezada | Jue 22-oct | Completado |
-| 5 | Entrega del avance (PDF) | Anggie Quezada | Jue 22-oct 17:20 | En curso |
-| 6 | V3 y cierre de la página Tikal | Iris Ayala | Vie 23-oct | Completado |
-| 7 | Limpieza de telefonía (`BD_moviidad_mensual.xlsx`) y cálculo del índice base 100. El AIMM (3 archivos, 2023 reconstruido) y la ocupación hotelera ya los dejó listos Iris en `src/datos.py` | Jonathan Díaz | Sáb 24-oct | **Pendiente** |
-| 8 | Página Triangulación (V4, V5) | Jonathan Díaz | Dom 25-oct | **Pendiente** |
-| 9 | Página Conectividad (V6, V7) | Iris Ayala | Sáb 24-oct | Completado |
-| 10 | Página Hospedaje con ocupación y oferta hotelera (V8, V9) | Iris Ayala | Sáb 24-oct | Completado |
-| 11 | Limpieza de migración (fronteras de Petén) y página Fronteras (V10, V11) | Jonathan Díaz | Dom 25-oct | **Pendiente** |
-| 12 | Páginas Resumen y Acerca de (glosario, limitaciones) | Anggie Quezada | Dom 25-oct | **Pendiente** |
-| 13 | Pruebas de uso, mensajes sin datos y ajustes de UX | Todo el grupo | Dom 25-oct | Pendiente |
-| 14 | Documento de diseño final en PDF (4.2 completa) | Anggie Quezada | Dom 25-oct | Pendiente |
-| 15 | Entrega final (PDF + link del repositorio) | Todo el grupo | Dom 25-oct | Pendiente |
+| # | Tarea | Responsable | Estado |
+|---|---|---|---|
+| 1 | Preguntas de gestión, alcance, paleta y justificación | Anggie Quezada | Completado |
+| 2 | Bosquejo de interfaz, navegación y elección de herramienta | Anggie Quezada | Completado |
+| 3 | Estructura del proyecto Dash, carga y limpieza de boletos de Tikal | Anggie Quezada | Completado |
+| 4 | Página Tikal: V1 y V2 enlazadas | Anggie Quezada | Completado |
+| 5 | Página Tikal: V3 | Iris Ayala | Completado |
+| 6 | Página Conectividad: V6 y V7 (cargadores del AIMM, 2023 reconstruido) | Iris Ayala | Completado |
+| 7 | Página Hospedaje: V8 y V9 (cargadores de ocupación y oferta hotelera) | Iris Ayala | Completado |
+| 8 | Cargador de telefonía en `src/datos.py` e índice base 100 | Jonathan Díaz | **Pendiente** |
+| 9 | Página Triangulación: V4 y V5 | Jonathan Díaz | **Pendiente** |
+| 10 | Documento de diseño final en PDF (revisar que 4.1 a 4.6 coincidan con lo construido) | Jonathan Díaz | **Pendiente** |
+| 11 | Entrega: el PDF y el link del repositorio, con el historial de los tres integrantes | Jonathan Díaz | **Pendiente** |
 
-### Qué falta y cómo hacerlo (estado al 24-oct)
+Hay 7 visualizaciones listas (V1 a V3, V6 a V9). El mínimo es 8, así que la página de Triangulación
+(V4 y V5) es lo único que falta para cumplirlo y deja el tablero en 9.
 
-Hay 7 visualizaciones listas (V1 a V3 en Tikal, V6 y V7 en Conectividad, V8 y V9 en Hospedaje). El
-mínimo es 8, así que **falta al menos una página más** para cumplirlo. Con Triangulación y Fronteras
-el tablero llega a 11.
+**Qué se entrega (según el enunciado del lab):** el documento de diseño en PDF y el link del repositorio
+donde se versionó el código. El repositorio debe ser privado, con los catedráticos y auxiliares como
+colaboradores, y sin la carpeta `datos/`.
 
-**Jonathan Díaz** (tareas 7, 8 y 11):
+### Archivos de la carpeta `datos/`
 
-1. **Archivos que faltan en `datos/`:** `BD_moviidad_mensual.xlsx` (hoja `Peten`) y
-   `Base_Migracion_2009-2026jun.xlsx`. Hoy no están en la carpeta. Se piden a la cátedra o al grupo.
-   La carpeta no se versiona (ver `.gitignore`).
-2. **Cargadores en `src/datos.py`:** `telefonia()` y `migracion_peten()`, con el mismo estilo que
-   `tikal()` y `aimm_pasajeros_total()`: formato largo, columnas `fecha`, `anio`, `mes`, `lru_cache`, y los
-   meses sin dato como `NaN`, nunca como 0 (telefonía no tiene ene y feb de 2026).
-3. **Triangulación (V4 y V5):** crear `pages/triangulacion.py` con `dash.register_page(__name__,
-   path="/triangulacion", name="Triangulación", order=2, ...)` y borrar su entrada de `PENDIENTES` en
-   `app.py`. Se reutilizan `tikal()` y `aimm_pasajeros_total()`, que ya existen.
-   - V4: índice base 100 (promedio de los meses en común) de las 3 fuentes en un mismo eje.
-   - V5: % de visitantes en Petén que compra boleto a Tikal (boletos ÷ visitantes por telefonía), separado
-     en nacionales y extranjeros. Un clic en un mes de V4 lo resalta en V5.
-   - Solo se comparan los meses en común. Recordar que telefonía está dominada por guatemaltecos (93 %).
-4. **Fronteras (V10 y V11):** `pages/fronteras.py`, filtrando las 4 fronteras de Petén (Melchor de
-   Mencos, Mundo Maya, El Naranjo y Bethel). V10 son barras apiladas por año y frontera. Un clic en una
-   barra actualiza V11, los 10 principales mercados de origen. Desde 2023 la base reporta agrupaciones
-   de mercado y no países, y la página debe avisarlo.
-5. **Cómo seguir el patrón de las otras páginas:** copiar la estructura de `pages/conectividad.py` o
-   `pages/hospedaje.py`: tarjetas con `kpi()`, un `dcc.Store` para la selección, `tarjeta_grafica()`,
-   `figura_vacia()` para los mensajes de "sin datos" y `aviso()` con las limitaciones. Los colores salen de
-   `src/tema.py`, sin códigos sueltos.
+La carpeta va en la raíz del proyecto y no se versiona (los datos son confidenciales). Se descargan de
+la carpeta "Datos Inguat". El link de descarga está en la entrega del Proyecto 3 en Canvas.
 
-**Anggie Quezada** (tareas 12, 14 y 5):
+| Archivo | Lo usa |
+|---|---|
+| `Visitantes_Tikal_2017-2026.xlsx` | Tikal, Triangulación |
+| `AIMM_Consolidado_2022-2025.xlsx` | Conectividad, Triangulación |
+| `AIMM_Aerolineas_2023-2026.xlsx` | Conectividad, Triangulación |
+| `AIMM_Operaciones_Aeronauticas_2022-2026.xlsx` | Conectividad |
+| `indice_ocupacion_mensual_2023_2025_1.csv` | Hospedaje |
+| `oferta_hotelera_2022_2026.csv` | Hospedaje |
+| `BD_moviidad_mensual.xlsx` (hoja `Peten`) | Triangulación |
 
-1. **Resumen:** `pages/resumen.py` con tarjetas clave de las tres fuentes y una guía breve de uso. Ya
-   existen las funciones `_indicadores()` de Tikal, Conectividad y Hospedaje que se pueden reutilizar. Debe
-   quedar en `order=0` y quitarse de `PENDIENTES`.
-2. **Acerca de:** `pages/acerca.py` con las fuentes, el glosario (índice base 100, estacionalidad,
-   triangulación, ocupación hotelera) y las limitaciones.
-3. **Documento de diseño final:** actualizar la 4.2 con lo implementado y exportar el PDF. Cambios
-   respecto a lo propuesto: V3 muestra el último año completo cuando no hay año elegido y solo compara
-   nacionales y extranjeros; V6 y V7 usan un tono claro del violeta AIMM para los bloques de año; V9
-   muestra los tipos de alojamiento en grises etiquetados y las habitaciones ocupadas como estimación con
-   rayas; el cierre del 4.º trimestre de cada año es la capacidad de todos sus meses.
-4. **Avance:** entregarlo a la cátedra o confirmar con el profesor si aceptó la entrega tardía.
+### Cómo se programa una página nueva
 
-**Todo el grupo** (tareas 13 y 15): probar cada página en el navegador, revisar que los mensajes de "sin
-datos" aparezcan y que cada integrante tenga commits en el historial.
+1. Crear el cargador de datos en `src/datos.py`, con el mismo estilo que `tikal()` o `aimm_aerolineas()`:
+   formato largo, columnas `fecha`, `anio` y `mes`, `lru_cache`, y los meses sin dato como `NaN`, nunca 0.
+2. Crear `pages/<nombre>.py` con `dash.register_page(...)`, copiando la estructura de
+   `pages/conectividad.py` o `pages/hospedaje.py`: tarjetas con `kpi()`, un `dcc.Store` para la
+   selección, `tarjeta_grafica()`, `figura_vacia()` para los mensajes de "sin datos" y `aviso()` con las
+   limitaciones.
+3. Tomar los colores de `src/tema.py`, sin códigos sueltos.
+4. Borrar la entrada de la página en `PENDIENTES` de `app.py`.
+
+### Qué lleva la página pendiente
+
+- **Triangulación:** V4 es el índice base 100 de las tres fuentes en un mismo eje (promedio de los meses
+  en común). V5 es el % de visitantes en Petén que compra boleto a Tikal, separado en nacionales y
+  extranjeros. Un clic en un mes de V4 lo resalta en V5. Se reutilizan `tikal()` y `aimm_pasajeros_total()`.
+  Solo se comparan los meses en común, y los meses sin dato quedan en blanco, nunca en 0.

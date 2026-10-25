@@ -29,7 +29,6 @@ FUENTES = {
     "Boletos Tikal": "#00826A",
     "AIMM": "#7B4FB0",
     "Telefonía": "#9A6700",
-    "Migración Petén": "#C2185B",
 }
 
 # Escala secuencial de un solo tono: claro = poco, oscuro = mucho
