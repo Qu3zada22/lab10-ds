@@ -178,6 +178,47 @@ def figura_estacionalidad(df: pd.DataFrame, anio_sel: int | None) -> go.Figure:
     return fig
 
 
+def _ultimo_anio_completo() -> int:
+    meses_con_dato = tikal().dropna(subset=["visitantes"]).groupby("anio")["mes"].nunique()
+    return int(meses_con_dato[meses_con_dato == 12].index.max())
+
+
+def figura_mezcla(anio: int) -> go.Figure:
+    """V3: de cada 100 boletos de un mes, cuántos son de nacionales y cuántos de extranjeros."""
+    df = tikal()
+    df = df[df["anio"] == anio]
+    meses = list(range(1, 13))
+    conteo = df.pivot_table(index="mes", columns="segmento", values="visitantes", aggfunc="sum").reindex(meses)
+    total = conteo[["Nacionales", "Extranjeros"]].sum(axis=1, min_count=1)
+    total = total.where(total > 0)  # mes cerrado o sin dato: queda en blanco, no en 0 %
+    cerrado = df.groupby("mes")["estado"].first().reindex(meses).eq("cerrado")
+
+    fig = go.Figure()
+    for segmento in ("Nacionales", "Extranjeros"):
+        porcentaje = conteo[segmento] / total * 100
+        fig.add_trace(
+            go.Bar(
+                x=MESES_CORTOS, y=porcentaje, name=segmento, marker_color=tema.SEGMENTOS[segmento],
+                customdata=np.stack([conteo[segmento], total], axis=-1),
+                text=[f"{p:.0f} %" if p >= 8 else "" for p in porcentaje.fillna(0)],
+                textposition="inside", insidetextanchor="middle", textfont=dict(color="#FFFFFF", size=12),
+                hovertemplate="<b>%{x} " + str(anio) + "</b><br>" + segmento
+                              + ": %{y:.1f} % (%{customdata[0]:,.0f} de %{customdata[1]:,.0f} boletos)<extra></extra>",
+            )
+        )
+    for mes in [m for m, c in zip(meses, cerrado) if c]:
+        fig.add_annotation(
+            x=MESES_CORTOS[mes - 1], y=50, text="Parque<br>cerrado", showarrow=False,
+            font=dict(size=11, color=tema.TEXTO_2),
+        )
+    fig.update_layout(
+        height=360, barmode="stack", bargap=0.25,
+        yaxis=dict(title="Parte de los boletos del mes", ticksuffix=" %", range=[0, 100], dtick=25),
+        margin=dict(l=64, r=16, t=40, b=40),
+    )
+    return fig
+
+
 # ---------------------------------------------------------------- layout
 
 ANIO_MIN, ANIO_MAX = int(tikal()["anio"].min()), int(tikal()["anio"].max())
@@ -254,6 +295,16 @@ layout = html.Div(
                     "Sirve para planificar personal y servicios en temporada alta y cuidar la capacidad del parque.",
                     "tikal-v2",
                     ayuda="Haz clic en una fila para resaltar ese año también en la gráfica de evolución.",
+                ),
+                tarjeta_grafica(
+                    "¿Quién visita Tikal en cada mes?",
+                    "De cada 100 boletos de nacionales y extranjeros, cuántos son de cada grupo. Sirve para "
+                    "dirigir la promoción al mercado que pesa más en cada temporada. No incluye boletos exonerados.",
+                    "tikal-v3",
+                    ayuda="Muestra el año que elijas con un clic en la evolución o en el mapa de calor; si no has "
+                          "elegido ninguno, el último año completo. Es una proporción, no una cantidad: "
+                          "pasa el cursor para ver los boletos.",
+                    extra=[html.P(id="tikal-v3-nota", className="estado-seleccion", role="status")],
                 ),
                 aviso(
                     html.B("Sobre los datos. "),
@@ -335,3 +386,16 @@ def actualizar_v2(segmentos, rango, anio):
     if not segmentos:
         return figura_vacia("Selecciona al menos un segmento de visitante en el panel de filtros.")
     return figura_estacionalidad(_filtrar(segmentos, rango), anio)
+
+
+@callback(
+    Output("tikal-v3", "figure"),
+    Output("tikal-v3-nota", "children"),
+    Input("tikal-anio", "data"),
+)
+def actualizar_v3(anio):
+    """Enlace V1/V2 → V3: muestra el año elegido; sin elección, el último año completo."""
+    if anio is None:
+        anio = _ultimo_anio_completo()
+        return figura_mezcla(anio), ["Mostrando: ", html.B(str(anio)), " (último año completo) · elige otro con un clic arriba"]
+    return figura_mezcla(anio), ["Mostrando: ", html.B(str(anio)), " · el mismo año resaltado arriba"]

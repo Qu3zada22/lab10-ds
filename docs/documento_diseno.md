@@ -342,7 +342,7 @@ app. Plotly aporta zoom, *hover*, treemap con drill-down y selección sin desarr
 ```
 lab10-ds/
 ├── app.py                   # punto de entrada: layout, barra y navegación
-├── pages/                   # una página por pestaña (tikal.py ya implementada)
+├── pages/                   # una página por pestaña (tikal, conectividad y hospedaje implementadas)
 ├── assets/style.css         # paleta y tipografía (Dash lo carga automáticamente)
 ├── src/
 │   ├── datos.py             # carga y limpieza de las fuentes
@@ -365,13 +365,60 @@ lab10-ds/
 | 3 | Estructura del proyecto Dash, carga y limpieza de boletos de Tikal | Anggie Quezada | Jue 22-oct | Completado |
 | 4 | V1 y V2 funcionales y enlazadas | Anggie Quezada | Jue 22-oct | Completado |
 | 5 | Entrega del avance (PDF) | Anggie Quezada | Jue 22-oct 17:20 | En curso |
-| 6 | V3 y cierre de la página Tikal | Iris Ayala | Vie 23-oct | Pendiente |
-| 7 | Limpieza de AIMM (3 archivos, reconstrucción 2023), telefonía y ocupación hotelera, índice base 100 | Jonathan Díaz | Vie 23-oct | Pendiente |
-| 8 | Página Triangulación (V4, V5) | Jonathan Díaz | Sáb 24-oct | Pendiente |
-| 9 | Página Conectividad (V6, V7) | Iris Ayala | Sáb 24-oct | Pendiente |
-| 10 | Página Hospedaje con ocupación y oferta hotelera (V8, V9) | Iris Ayala | Sáb 24-oct | Pendiente |
-| 11 | Limpieza de migración (fronteras de Petén) y página Fronteras (V10, V11) | Jonathan Díaz | Sáb 24-oct | Pendiente |
-| 12 | Páginas Resumen y Acerca de (glosario, limitaciones) | Anggie Quezada | Dom 25-oct | Pendiente |
+| 6 | V3 y cierre de la página Tikal | Iris Ayala | Vie 23-oct | Completado |
+| 7 | Limpieza de telefonía (`BD_moviidad_mensual.xlsx`) y cálculo del índice base 100. El AIMM (3 archivos, 2023 reconstruido) y la ocupación hotelera ya los dejó listos Iris en `src/datos.py` | Jonathan Díaz | Sáb 24-oct | **Pendiente** |
+| 8 | Página Triangulación (V4, V5) | Jonathan Díaz | Dom 25-oct | **Pendiente** |
+| 9 | Página Conectividad (V6, V7) | Iris Ayala | Sáb 24-oct | Completado |
+| 10 | Página Hospedaje con ocupación y oferta hotelera (V8, V9) | Iris Ayala | Sáb 24-oct | Completado |
+| 11 | Limpieza de migración (fronteras de Petén) y página Fronteras (V10, V11) | Jonathan Díaz | Dom 25-oct | **Pendiente** |
+| 12 | Páginas Resumen y Acerca de (glosario, limitaciones) | Anggie Quezada | Dom 25-oct | **Pendiente** |
 | 13 | Pruebas de uso, mensajes sin datos y ajustes de UX | Todo el grupo | Dom 25-oct | Pendiente |
 | 14 | Documento de diseño final en PDF (4.2 completa) | Anggie Quezada | Dom 25-oct | Pendiente |
 | 15 | Entrega final (PDF + link del repositorio) | Todo el grupo | Dom 25-oct | Pendiente |
+
+### Qué falta y cómo hacerlo (estado al 24-oct)
+
+Hay 7 visualizaciones listas (V1 a V3 en Tikal, V6 y V7 en Conectividad, V8 y V9 en Hospedaje). El
+mínimo es 8, así que **falta al menos una página más** para cumplirlo. Con Triangulación y Fronteras
+el tablero llega a 11.
+
+**Jonathan Díaz** (tareas 7, 8 y 11):
+
+1. **Archivos que faltan en `datos/`:** `BD_moviidad_mensual.xlsx` (hoja `Peten`) y
+   `Base_Migracion_2009-2026jun.xlsx`. Hoy no están en la carpeta. Se piden a la cátedra o al grupo.
+   La carpeta no se versiona (ver `.gitignore`).
+2. **Cargadores en `src/datos.py`:** `telefonia()` y `migracion_peten()`, con el mismo estilo que
+   `tikal()` y `aimm_pasajeros_total()`: formato largo, columnas `fecha`, `anio`, `mes`, `lru_cache`, y los
+   meses sin dato como `NaN`, nunca como 0 (telefonía no tiene ene y feb de 2026).
+3. **Triangulación (V4 y V5):** crear `pages/triangulacion.py` con `dash.register_page(__name__,
+   path="/triangulacion", name="Triangulación", order=2, ...)` y borrar su entrada de `PENDIENTES` en
+   `app.py`. Se reutilizan `tikal()` y `aimm_pasajeros_total()`, que ya existen.
+   - V4: índice base 100 (promedio de los meses en común) de las 3 fuentes en un mismo eje.
+   - V5: % de visitantes en Petén que compra boleto a Tikal (boletos ÷ visitantes por telefonía), separado
+     en nacionales y extranjeros. Un clic en un mes de V4 lo resalta en V5.
+   - Solo se comparan los meses en común. Recordar que telefonía está dominada por guatemaltecos (93 %).
+4. **Fronteras (V10 y V11):** `pages/fronteras.py`, filtrando las 4 fronteras de Petén (Melchor de
+   Mencos, Mundo Maya, El Naranjo y Bethel). V10 son barras apiladas por año y frontera. Un clic en una
+   barra actualiza V11, los 10 principales mercados de origen. Desde 2023 la base reporta agrupaciones
+   de mercado y no países, y la página debe avisarlo.
+5. **Cómo seguir el patrón de las otras páginas:** copiar la estructura de `pages/conectividad.py` o
+   `pages/hospedaje.py`: tarjetas con `kpi()`, un `dcc.Store` para la selección, `tarjeta_grafica()`,
+   `figura_vacia()` para los mensajes de "sin datos" y `aviso()` con las limitaciones. Los colores salen de
+   `src/tema.py`, sin códigos sueltos.
+
+**Anggie Quezada** (tareas 12, 14 y 5):
+
+1. **Resumen:** `pages/resumen.py` con tarjetas clave de las tres fuentes y una guía breve de uso. Ya
+   existen las funciones `_indicadores()` de Tikal, Conectividad y Hospedaje que se pueden reutilizar. Debe
+   quedar en `order=0` y quitarse de `PENDIENTES`.
+2. **Acerca de:** `pages/acerca.py` con las fuentes, el glosario (índice base 100, estacionalidad,
+   triangulación, ocupación hotelera) y las limitaciones.
+3. **Documento de diseño final:** actualizar la 4.2 con lo implementado y exportar el PDF. Cambios
+   respecto a lo propuesto: V3 muestra el último año completo cuando no hay año elegido y solo compara
+   nacionales y extranjeros; V6 y V7 usan un tono claro del violeta AIMM para los bloques de año; V9
+   muestra los tipos de alojamiento en grises etiquetados y las habitaciones ocupadas como estimación con
+   rayas; el cierre del 4.º trimestre de cada año es la capacidad de todos sus meses.
+4. **Avance:** entregarlo a la cátedra o confirmar con el profesor si aceptó la entrega tardía.
+
+**Todo el grupo** (tareas 13 y 15): probar cada página en el navegador, revisar que los mensajes de "sin
+datos" aparezcan y que cada integrante tenga commits en el historial.
