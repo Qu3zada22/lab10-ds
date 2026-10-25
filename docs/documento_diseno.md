@@ -276,7 +276,7 @@ complementarios y **no** se cuentan.
 | V2 | Estacionalidad mes × año | Tikal | Mapa de calor | Dos ejes ordinales (mes, año) y una cantidad: el color secuencial deja ver de un vistazo qué meses son temporada alta | Filtra por segmento. **Clic en un año → V1** (enlace en ambos sentidos) |
 | V3 | Mezcla nacional/extranjero por mes | Tikal | Barras apiladas al 100 % | Compara proporciones de pocas categorías | Muestra el año elegido en V1 o V2 |
 | V4 | Las 3 fuentes en una escala común | Triang. | Líneas de índice (base 100 = promedio de los meses en común) | Las fuentes tienen escalas muy distintas (miles contra cientos de miles). El índice las pone en el mismo eje para comparar la **forma**. Los meses sin dato quedan como huecos, no como ceros | Elegir fuentes, **clic en un mes → V5** |
-| V5 | % de visitantes en Petén que compra boleto a Tikal | Triang. | Barras agrupadas por mes (nacionales / extranjeros) | Es el indicador clave de la asignación. Las barras comparan bien una proporción mes a mes y entre dos segmentos | Resalta el mes elegido en V4 y muestra el detalle por polígono |
+| V5 | % de visitantes en Petén que compra boleto a Tikal | Triang. | Barras agrupadas por mes (nacionales / extranjeros) | Es el indicador clave de la asignación. Las barras comparan bien una proporción mes a mes y entre dos segmentos | Resalta el mes elegido en V4. Los meses sin telefonía se marcan como sin dato |
 | V6 | Pasajeros AIMM por aerolínea y año (con 2023 reconstruido) | Conect. | Treemap año → aerolínea | Muestra jerarquía y concentración (T.A.G. y Aviateca suman más del 95 %) y permite **bajar y subir de nivel** | Clic para profundizar o regresar. **Clic en una aerolínea → V7** |
 | V7 | Pasajeros y operaciones mensuales del operador elegido | Conect. | Dos paneles de líneas alineados (eje X compartido, eje Y propio) | Las dos medidas tienen unidades distintas: en paneles separados se comparan en el tiempo **sin mezclar vuelos con pasajeros** | Cambia según la aerolínea elegida en V6 |
 | V8 | Ocupación hotelera mensual de Petén, un año por línea | Hosp. | Gráfico estacional (eje X = mes, una línea por año) con línea de referencia en 85 % | Al superponer los años se ve si la temporada alta se repite y en qué meses hay saturación o capacidad libre | Mostrar u ocultar años. **Clic en un mes → V9** |
@@ -341,13 +341,12 @@ lab10-ds/
 | 5 | Página Tikal: V3 | Iris Ayala | Completado |
 | 6 | Página Conectividad: V6 y V7 (cargadores del AIMM, 2023 reconstruido) | Iris Ayala | Completado |
 | 7 | Página Hospedaje: V8 y V9 (cargadores de ocupación y oferta hotelera) | Iris Ayala | Completado |
-| 8 | Cargador de telefonía en `src/datos.py` e índice base 100 | Jonathan Díaz | **Pendiente** |
-| 9 | Página Triangulación: V4 y V5 | Jonathan Díaz | **Pendiente** |
-| 10 | Documento de diseño final en PDF (revisar que 4.1 a 4.6 coincidan con lo construido) | Jonathan Díaz | **Pendiente** |
+| 8 | Cargador de telefonía en `src/datos.py` e índice base 100 | Jonathan Díaz | Completado |
+| 9 | Página Triangulación: V4 y V5 | Jonathan Díaz | Completado |
+| 10 | Documento de diseño final en PDF (revisar que 4.1 a 4.6 coincidan con lo construido) | Jonathan Díaz | Completado |
 | 11 | Entrega: el PDF y el link del repositorio, con el historial de los tres integrantes | Jonathan Díaz | **Pendiente** |
 
-Hay 7 visualizaciones listas (V1 a V3, V6 a V9). El mínimo es 8, así que la página de Triangulación
-(V4 y V5) es lo único que falta para cumplirlo y deja el tablero en 9.
+Las 9 visualizaciones están listas (V1 a V9), por encima del mínimo de 8.
 
 **Qué se entrega (según el enunciado del lab):** el documento de diseño en PDF y el link del repositorio
 donde se versionó el código. El repositorio debe ser privado, con los catedráticos y auxiliares como
@@ -367,21 +366,3 @@ la carpeta "Datos Inguat". El link de descarga está en la entrega del Proyecto 
 | `indice_ocupacion_mensual_2023_2025_1.csv` | Hospedaje |
 | `oferta_hotelera_2022_2026.csv` | Hospedaje |
 | `BD_moviidad_mensual.xlsx` (hoja `Peten`) | Triangulación |
-
-### Cómo se programa una página nueva
-
-1. Crear el cargador de datos en `src/datos.py`, con el mismo estilo que `tikal()` o `aimm_aerolineas()`:
-   formato largo, columnas `fecha`, `anio` y `mes`, `lru_cache`, y los meses sin dato como `NaN`, nunca 0.
-2. Crear `pages/<nombre>.py` con `dash.register_page(...)`, copiando la estructura de
-   `pages/conectividad.py` o `pages/hospedaje.py`: tarjetas con `kpi()`, un `dcc.Store` para la
-   selección, `tarjeta_grafica()`, `figura_vacia()` para los mensajes de "sin datos" y `aviso()` con las
-   limitaciones.
-3. Tomar los colores de `src/tema.py`, sin códigos sueltos.
-4. Borrar la entrada de la página en `PENDIENTES` de `app.py`.
-
-### Qué lleva la página pendiente
-
-- **Triangulación:** V4 es el índice base 100 de las tres fuentes en un mismo eje (promedio de los meses
-  en común). V5 es el % de visitantes en Petén que compra boleto a Tikal, separado en nacionales y
-  extranjeros. Un clic en un mes de V4 lo resalta en V5. Se reutilizan `tikal()` y `aimm_pasajeros_total()`.
-  Solo se comparan los meses en común, y los meses sin dato quedan en blanco, nunca en 0.
