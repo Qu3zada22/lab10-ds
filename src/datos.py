@@ -179,3 +179,67 @@ def oferta_peten() -> pd.DataFrame:
     df = pd.read_csv(ARCHIVO_OFERTA)
     df = df[df["departamento"].str.startswith("Pet")]
     return df.rename(columns={"tipo_alojamiento": "tipo"}).drop(columns="departamento").reset_index(drop=True)
+
+
+# ---------------------------------------------------------------- Telefonía (triangulación)
+
+ARCHIVO_TELEFONIA = DATOS / "BD_moviidad_mensual.xlsx"
+
+
+@lru_cache
+def telefonia_peten() -> pd.DataFrame:
+    """Visitantes estimados por telefonía en los tres polígonos de Petén, sep 2025 a ago 2026.
+
+    Se suman los polígonos y los dos tipos de estancia, por mes y nacionalidad. Una misma persona puede
+    aparecer en más de un polígono, así que el total es una medida relativa, no personas únicas.
+    Faltan enero y febrero de 2026: esos meses no existen en la tabla (sin dato, no 0).
+    Columnas: fecha, anio, mes, segmento ("Nacionales", "Extranjeros" o "Sin país"), visitantes.
+    """
+    df = pd.read_excel(ARCHIVO_TELEFONIA, sheet_name="Peten")
+    df["segmento"] = np.where(df["pais"].isna(), "Sin país", np.where(df["pais"] == "Guatemala", "Nacionales", "Extranjeros"))
+    df["fecha"] = pd.to_datetime(df["fecha"])
+    df["anio"], df["mes"] = df["fecha"].dt.year, df["fecha"].dt.month
+    return (
+        df.groupby(["fecha", "anio", "mes", "segmento"], as_index=False)["visitantes"].sum()
+        .sort_values(["fecha", "segmento"]).reset_index(drop=True)
+    )
+
+
+@lru_cache
+def triangulacion() -> pd.DataFrame:
+    """Las tres fuentes en una tabla mensual, dentro del periodo con telefonía (sep 2025 a ago 2026).
+
+    Columnas: fecha, boletos (Tikal, todos los segmentos), pasajeros (AIMM), telefonia, boletos_nac,
+    boletos_ext, telefonia_nac, telefonia_ext. Todos los meses del periodo aparecen; el que no tiene dato
+    en una fuente queda en NaN.
+    """
+    tel = telefonia_peten()
+    fechas = pd.date_range(tel["fecha"].min(), tel["fecha"].max(), freq="MS")
+    base = pd.DataFrame({"fecha": fechas}).set_index("fecha")
+
+    tk = tikal().pivot_table(index="fecha", columns="segmento", values="visitantes", aggfunc="sum", dropna=False)
+    base["boletos"] = tk.sum(axis=1, min_count=1)
+    base["boletos_nac"], base["boletos_ext"] = tk["Nacionales"], tk["Extranjeros"]
+    base["pasajeros"] = aimm_pasajeros_total().set_index("fecha")["pasajeros"]
+    tp = tel.pivot_table(index="fecha", columns="segmento", values="visitantes", aggfunc="sum")
+    base["telefonia"] = tp.sum(axis=1, min_count=1)
+    base["telefonia_nac"], base["telefonia_ext"] = tp["Nacionales"], tp["Extranjeros"]
+    return base.reset_index()
+
+
+FUENTES_COLUMNA = {"Boletos Tikal": "boletos", "AIMM": "pasajeros", "Telefonía": "telefonia"}
+
+
+def indice_base_100() -> pd.DataFrame:
+    """Índice de cada fuente: 100 es su promedio en los meses donde las tres tienen dato.
+
+    Columnas: fecha, una por fuente (índice) y `en_comun` (True si las tres tienen dato ese mes).
+    """
+    t = triangulacion()
+    cols = list(FUENTES_COLUMNA.values())
+    comun = t[cols].notna().all(axis=1)
+    out = t[["fecha"]].copy()
+    for nombre, col in FUENTES_COLUMNA.items():
+        out[nombre] = t[col] / t.loc[comun, col].mean() * 100
+    out["en_comun"] = comun
+    return out

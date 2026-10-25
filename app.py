@@ -7,7 +7,6 @@ import dash
 from dash import Dash, Input, Output, dcc, html
 
 from src import tema  # noqa: F401  (registra la plantilla de Plotly)
-from src.componentes import en_construccion
 
 app = Dash(
     __name__,
@@ -18,19 +17,6 @@ app = Dash(
         "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
     ],
 )
-
-# Secciones planificadas en docs/documento_diseno.md que aún no se implementan.
-# Cada integrante reemplaza su entrada por un archivo en pages/ cuando la construya.
-PENDIENTES = [
-    ("triangulacion", "Triangulación", 2,
-     "P3. ¿Qué porcentaje de los visitantes en Petén compra boleto a Tikal?",
-     "V4 índice base 100 de las tres fuentes enlazado con V5 % de visitantes con boleto.", "Jonathan Díaz"),
-]
-for modulo, nombre, orden, pregunta, contenido, responsable in PENDIENTES:
-    dash.register_page(
-        modulo, path=f"/{modulo}", name=nombre, order=orden, title=f"{nombre} · Observatorio Petén",
-        layout=en_construccion(nombre, pregunta, contenido, responsable),
-    )
 
 app.layout = html.Div(
     [
