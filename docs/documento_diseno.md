@@ -2,11 +2,12 @@
 
 **CC3066 Data Science | UVG | Semestre II 2026 | Laboratorio 10 | Grupo 2**
 Integrantes: Iris Ayala 23960, Jonathan Díaz 23837 y Anggie Quezada 23643
+Repositorio: <https://github.com/Qu3zada22/lab10-ds>
 
-> **Avance, 22 de octubre de 2026.** Contiene las preguntas de gestión y el alcance del tablero, la
-> paleta de colores y su justificación, la planificación de tareas y responsables, el bosquejo de
-> la interfaz y la navegación, y la herramienta elegida con su justificación. La sección 4.2 tiene
-> la propuesta de visualizaciones y se completará en la entrega final.
+> **Entrega final, 25 de octubre de 2026.** Contiene las preguntas de gestión y el alcance del tablero,
+> la paleta de colores y su justificación, el bosquejo de la interfaz y la navegación, las 9
+> visualizaciones con la elección de cada tipo de gráfica, la herramienta elegida con su
+> justificación y la planificación de tareas y responsables.
 >
 > **Nota sobre modelos:** por indicación del catedrático, este laboratorio es solo un tablero
 > descriptivo. No se incluyen modelos predictivos ni de clasificación; esos quedan para el
