@@ -344,7 +344,7 @@ lab10-ds/
 | 8 | Cargador de telefonía en `src/datos.py` e índice base 100 | Jonathan Díaz | Completado |
 | 9 | Página Triangulación: V4 y V5 | Jonathan Díaz | Completado |
 | 10 | Documento de diseño final en PDF (revisar que 4.1 a 4.6 coincidan con lo construido) | Jonathan Díaz | Completado |
-| 11 | Entrega: el PDF y el link del repositorio, con el historial de los tres integrantes | Jonathan Díaz | **Pendiente** |
+| 11 | Entrega: el PDF y el link del repositorio, con el historial de los tres integrantes | Jonathan Díaz | Entrega: 25 de octubre de 2026 |
 
 Las 9 visualizaciones están listas (V1 a V9), por encima del mínimo de 8.
 
