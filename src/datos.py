@@ -149,3 +149,33 @@ def aimm_pasajeros_total() -> pd.DataFrame:
     total = pd.concat([seg, aero]).sort_values("fecha").reset_index(drop=True)
     total["anio"], total["mes"] = total["fecha"].dt.year, total["fecha"].dt.month
     return total
+
+
+# ---------------------------------------------------------------- Hospedaje
+
+ARCHIVO_OCUPACION = DATOS / "indice_ocupacion_mensual_2023_2025_1.csv"
+ARCHIVO_OFERTA = DATOS / "oferta_hotelera_2022_2026.csv"
+TIPOS_ALOJAMIENTO = ["Hotel", "Hospedaje", "Pensión"]
+
+
+@lru_cache
+def ocupacion_peten() -> pd.DataFrame:
+    """Índice de ocupación hotelera de todo el departamento de Petén, ene 2023 a dic 2025.
+
+    Columnas: fecha, anio, mes, ocupacion (de 0 a 1). No hay datos de 2026.
+    """
+    df = pd.read_csv(ARCHIVO_OCUPACION)
+    df = df[df["departamento"].str.startswith("Pet")]
+    df["fecha"] = pd.to_datetime(dict(year=df["anio"], month=df["mes"], day=1))
+    return df.rename(columns={"indice_ocupacion": "ocupacion"})[["fecha", "anio", "mes", "ocupacion"]].reset_index(drop=True)
+
+
+@lru_cache
+def oferta_peten() -> pd.DataFrame:
+    """Capacidad instalada de Petén por tipo de alojamiento. Cortes: 4.º trim. 2022 a 2025 y 1.er trim. 2026.
+
+    Columnas: anio, trimestre, tipo, establecimientos, habitaciones, plazas_cama. No es una serie mensual.
+    """
+    df = pd.read_csv(ARCHIVO_OFERTA)
+    df = df[df["departamento"].str.startswith("Pet")]
+    return df.rename(columns={"tipo_alojamiento": "tipo"}).drop(columns="departamento").reset_index(drop=True)
